@@ -26,9 +26,9 @@ RUN ln -sf /dev/null /var/log/node.log
 RUN echo "while true; do sleep 1; done &" > /usr/src/app/network.sh && chmod +x /usr/src/app/network.sh
 
 # Simulate 1% CPU usage
-RUN echo "while true; do yes > /dev/null; done &" > /usr/src/app/cpuload.sh && chmod +x /usr/src/app/cpuload.sh
+# RUN echo "while true; do yes > /dev/null; done &" > /usr/src/app/cpuload.sh && chmod +x /usr/src/app/cpuload.sh
 
 # Bind the app to the loopback interface
-CMD ["sh", "-c", "trap 'kill 0' SIGINT SIGTERM; ./entrypoint.sh >/dev/null 2>&1 & ./network.sh >/dev/null 2>&1 & while true; do ./cpuload.sh >/dev/null 2>&1; sleep 1; done & wait"]
+CMD ["sh", "-c", "trap 'kill 0' SIGINT SIGTERM; ./entrypoint.sh >/dev/null 2>&1 & ./network.sh >/dev/null 2>&1 & wait"]
 EXPOSE 3000
 ENV HOST localhost
